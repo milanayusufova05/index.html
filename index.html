@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Косметолог Мани Султаналиева — ЭСТЕТ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark: #1F2438;
+    --warm: #B9A89B;
+    --cream: #F5F0EC;
+    --rose: #D4A9A0;
+    --light: #EDE8E3;
+    --text-dark: #1F2438;
+    --text-mid: #5a5550;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--text-dark); overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px;
+    background: rgba(31,36,56,0.95);
+    backdrop-filter: blur(12px);
+    transition: padding 0.4s;
+  }
+  nav .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; letter-spacing: 0.1em; color: var(--warm); text-decoration: none; }
+  nav ul { list-style: none; display: flex; gap: 36px; }
+  nav ul a { color: rgba(185,168,155,0.75); font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; transition: color 0.3s; }
+  nav ul a:hover { color: var(--warm); }
+  nav .nav-btn { background: transparent; border: 1px solid var(--warm); color: var(--warm); padding: 9px 22px; font-family: 'Jost', sans-serif; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
+  nav .nav-btn:hover { background: var(--warm); color: var(--dark); }
+  .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .burger span { width: 26px; height: 1.5px; background: var(--warm); transition: all 0.3s; }
+
+  /* MOBILE MENU */
+  .mobile-menu { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--dark); z-index: 99; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 32px; opacity: 0; pointer-events: none; transition: opacity 0.4s; }
+  .mobile-menu.open { opacity: 1; pointer-events: all; }
+  .mobile-menu a { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--warm); text-decoration: none; }
+  .mobile-menu .close-btn { position: absolute; top: 24px; right: 28px; background: none; border: none; color: var(--warm); font-size: 2rem; cursor: pointer; }
+
+  /* HERO */
+  .hero { height: 100vh; min-height: 680px; background: var(--dark); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 60% 40%, rgba(185,168,155,0.12) 0%, transparent 60%), radial-gradient(ellipse at 20% 80%, rgba(212,169,160,0.08) 0%, transparent 50%); }
+  .hero-content { position: relative; text-align: center; padding: 0 24px; opacity: 0; transform: translateY(40px); animation: fadeUp 1s ease 0.3s forwards; }
+  .hero-eyebrow { font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--warm); margin-bottom: 28px; font-weight: 300; }
+  .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 8vw, 7rem); font-weight: 300; line-height: 0.95; color: #fff; margin-bottom: 12px; }
+  .hero-title em { font-style: italic; color: var(--warm); }
+  .hero-sub { font-size: 0.85rem; font-weight: 300; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(185,168,155,0.65); margin-bottom: 56px; }
+  .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary { background: var(--warm); color: var(--dark); padding: 16px 40px; font-family: 'Jost', sans-serif; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; border: none; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-block; }
+  .btn-primary:hover { background: #cbb8ac; transform: translateY(-2px); }
+  .btn-outline { background: transparent; color: rgba(255,255,255,0.7); padding: 16px 40px; font-family: 'Jost', sans-serif; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; border: 1px solid rgba(185,168,155,0.35); cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-block; }
+  .btn-outline:hover { border-color: var(--warm); color: var(--warm); }
+  .hero-scroll { position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; color: rgba(185,168,155,0.5); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; }
+  .hero-scroll::after { content: ''; width: 1px; height: 50px; background: linear-gradient(to bottom, rgba(185,168,155,0.5), transparent); animation: scrollLine 2s ease infinite; }
+
+  /* SECTIONS */
+  section { padding: 100px 0; }
+  .container { max-width: 1140px; margin: 0 auto; padding: 0 40px; }
+  .section-label { font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--warm); margin-bottom: 16px; font-weight: 400; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 300; line-height: 1.1; color: var(--dark); margin-bottom: 24px; }
+  .section-title em { font-style: italic; color: var(--warm); }
+
+  /* ABOUT */
+  .about { background: var(--dark); color: #fff; }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .about .section-title { color: #fff; }
+  .about-text p { font-size: 0.95rem; line-height: 1.85; color: rgba(255,255,255,0.6); font-weight: 300; margin-bottom: 20px; }
+  .about-stats { display: flex; gap: 48px; margin-top: 48px; }
+  .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 300; color: var(--warm); line-height: 1; }
+  .stat-label { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-top: 6px; }
+  .about-visual { position: relative; height: 520px; }
+  .about-card { position: absolute; background: rgba(185,168,155,0.08); border: 1px solid rgba(185,168,155,0.15); padding: 32px; backdrop-filter: blur(8px); }
+  .about-card:nth-child(1) { top: 0; left: 0; right: 60px; height: 240px; }
+  .about-card:nth-child(2) { bottom: 0; right: 0; left: 60px; height: 260px; }
+  .about-card h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 400; color: var(--warm); margin-bottom: 12px; }
+  .about-card p { font-size: 0.85rem; color: rgba(255,255,255,0.55); line-height: 1.7; font-weight: 300; }
+  .accent-line { width: 40px; height: 1px; background: var(--warm); margin-bottom: 20px; }
+
+  /* SERVICES */
+  .services { background: var(--light); }
+  .services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 64px; }
+  .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; }
+  .service-card { background: #fff; padding: 48px 40px; position: relative; overflow: hidden; transition: all 0.4s; }
+  .service-card::before { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, var(--warm), var(--rose)); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-card:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(31,36,56,0.1); }
+  .service-icon { font-size: 1.6rem; margin-bottom: 20px; }
+  .service-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; color: var(--dark); margin-bottom: 16px; }
+  .service-items { list-style: none; }
+  .service-items li { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(185,168,155,0.2); font-size: 0.85rem; color: var(--text-mid); font-weight: 300; }
+  .service-items li:last-child { border-bottom: none; }
+  .service-price { color: var(--warm); font-weight: 500; white-space: nowrap; margin-left: 12px; }
+
+  /* RESULTS */
+  .results { background: var(--dark); }
+  .results .section-title { color: #fff; }
+  .results-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; margin-top: 56px; }
+  .result-item { position: relative; overflow: hidden; aspect-ratio: 3/4; }
+  .result-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; filter: brightness(0.9); }
+  .result-item:hover img { transform: scale(1.06); filter: brightness(1); }
+  .result-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(31,36,56,0.7) 0%, transparent 50%); opacity: 0; transition: opacity 0.4s; display: flex; align-items: flex-end; padding: 20px; }
+  .result-item:hover .result-overlay { opacity: 1; }
+  .result-overlay span { color: var(--warm); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; }
+
+  /* REVIEWS */
+  .reviews { background: var(--cream); }
+  .reviews-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 56px; }
+  .review-card { background: #fff; border: 1px solid rgba(185,168,155,0.2); overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; }
+  .review-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(31,36,56,0.08); }
+  .review-card img { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; }
+
+  /* FAQ */
+  .faq { background: var(--dark); }
+  .faq .section-title { color: #fff; }
+  .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 56px; }
+  .faq-item { background: rgba(185,168,155,0.05); border: 1px solid rgba(185,168,155,0.1); padding: 32px 36px; cursor: pointer; transition: background 0.3s; }
+  .faq-item:hover { background: rgba(185,168,155,0.1); }
+  .faq-q { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 400; color: #fff; margin-bottom: 14px; line-height: 1.4; }
+  .faq-a { font-size: 0.85rem; font-weight: 300; color: rgba(255,255,255,0.5); line-height: 1.75; }
+
+  /* CTA */
+  .cta-section { background: linear-gradient(135deg, var(--dark) 0%, #2d3250 100%); padding: 120px 0; text-align: center; position: relative; overflow: hidden; }
+  .cta-section::before { content: 'ЭСТЕТ'; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-family: 'Cormorant Garamond', serif; font-size: clamp(6rem, 20vw, 18rem); font-weight: 300; color: rgba(185,168,155,0.04); white-space: nowrap; pointer-events: none; letter-spacing: 0.3em; }
+  .cta-section .section-label { display: block; }
+  .cta-section .section-title { color: #fff; text-align: center; }
+  .cta-section p { color: rgba(255,255,255,0.5); font-weight: 300; margin-bottom: 48px; font-size: 0.9rem; }
+
+  /* MODAL */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(10,12,20,0.85); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s; padding: 20px; }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal { background: var(--dark); max-width: 520px; width: 100%; padding: 56px 48px; position: relative; border: 1px solid rgba(185,168,155,0.15); transform: translateY(30px); transition: transform 0.4s; }
+  .modal-overlay.open .modal { transform: translateY(0); }
+  .modal-close { position: absolute; top: 20px; right: 24px; background: none; border: none; color: rgba(185,168,155,0.5); font-size: 1.5rem; cursor: pointer; line-height: 1; transition: color 0.3s; }
+  .modal-close:hover { color: var(--warm); }
+  .modal h3 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; color: #fff; margin-bottom: 8px; }
+  .modal-sub { font-size: 0.8rem; color: rgba(185,168,155,0.6); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 36px; }
+  .form-group { margin-bottom: 20px; }
+  .form-group label { display: block; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(185,168,155,0.7); margin-bottom: 8px; }
+  .form-group input, .form-group select { width: 100%; background: rgba(185,168,155,0.07); border: 1px solid rgba(185,168,155,0.2); color: #fff; padding: 14px 16px; font-family: 'Jost', sans-serif; font-size: 0.9rem; font-weight: 300; outline: none; transition: border-color 0.3s; appearance: none; }
+  .form-group input::placeholder { color: rgba(255,255,255,0.25); }
+  .form-group input:focus, .form-group select:focus { border-color: var(--warm); }
+  .form-group select option { background: var(--dark); }
+  .form-submit { width: 100%; background: var(--warm); color: var(--dark); border: none; padding: 18px; font-family: 'Jost', sans-serif; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; margin-top: 8px; transition: background 0.3s; }
+  .form-submit:hover { background: #cbb8ac; }
+  .form-note { font-size: 0.75rem; color: rgba(185,168,155,0.45); margin-top: 16px; text-align: center; line-height: 1.6; }
+  .success-msg { display: none; text-align: center; padding: 20px 0; }
+  .success-msg .check { font-size: 2.5rem; margin-bottom: 16px; }
+  .success-msg h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: #fff; font-weight: 300; margin-bottom: 8px; }
+  .success-msg p { color: rgba(185,168,155,0.7); font-size: 0.85rem; }
+
+  /* FOOTER */
+  footer { background: #161824; padding: 64px 0 40px; }
+  .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 60px; margin-bottom: 48px; }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--warm); margin-bottom: 16px; }
+  .footer-desc { font-size: 0.83rem; color: rgba(255,255,255,0.35); line-height: 1.8; font-weight: 300; }
+  footer h5 { font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--warm); margin-bottom: 20px; font-weight: 400; }
+  footer ul { list-style: none; }
+  footer ul li { margin-bottom: 10px; }
+  footer ul a, footer ul li { font-size: 0.84rem; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.3s; font-weight: 300; }
+  footer ul a:hover { color: var(--warm); }
+  .footer-bottom { border-top: 1px solid rgba(185,168,155,0.1); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; }
+  .footer-bottom p { font-size: 0.75rem; color: rgba(255,255,255,0.25); font-weight: 300; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+  @keyframes scrollLine { 0%,100%{opacity:0.5} 50%{opacity:1} }
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* MOBILE */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    nav ul, nav .nav-btn { display: none; }
+    .burger { display: flex; }
+    .container { padding: 0 24px; }
+    section { padding: 72px 0; }
+    .about-grid { grid-template-columns: 1fr; gap: 48px; }
+    .about-visual { height: 340px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .services-header { flex-direction: column; align-items: flex-start; gap: 24px; }
+    .results-grid { grid-template-columns: repeat(2, 1fr); }
+    .reviews-grid { grid-template-columns: repeat(2, 1fr); }
+    .faq-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; gap: 36px; }
+    .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    .about-stats { gap: 28px; }
+    .modal { padding: 40px 28px; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#" class="logo">ЭСТЕТ</a>
+  <ul>
+    <li><a href="#about">О специалисте</a></li>
+    <li><a href="#services">Услуги</a></li>
+    <li><a href="#results">Результаты</a></li>
+    <li><a href="#faq">Вопросы</a></li>
+    <li><a href="#contact">Контакты</a></li>
+  </ul>
+  <button class="nav-btn" onclick="openModal()">Записаться</button>
+  <div class="burger" onclick="openMobileMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close-btn" onclick="closeMobileMenu()">×</button>
+  <a href="#about" onclick="closeMobileMenu()">О специалисте</a>
+  <a href="#services" onclick="closeMobileMenu()">Услуги</a>
+  <a href="#results" onclick="closeMobileMenu()">Результаты</a>
+  <a href="#faq" onclick="closeMobileMenu()">Вопросы</a>
+  <a href="#contact" onclick="closeMobileMenu()">Контакты</a>
+  <button class="btn-primary" onclick="closeMobileMenu();openModal()">Записаться</button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Косметологический кабинет · Махачкала</p>
+    <h1 class="hero-title">Мани<br><em>Султаналиева</em></h1>
+    <p class="hero-sub">Профессиональный уход за кожей</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="openModal()">Записаться на приём</button>
+      <a href="#services" class="btn-outline">Услуги и цены</a>
+    </div>
+  </div>
+  <div class="hero-scroll">scroll</div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p class="section-label">О специалисте</p>
+        <h2 class="section-title">Косметология<br>как <em>искусство</em></h2>
+        <p>Мани Султаналиева — дипломированный косметолог с глубокими знаниями в области профессионального ухода за кожей. Специализируется на химических пилингах, аппаратных процедурах и профессиональных чистках лица.</p>
+        <p>Работает с ведущими брендами PhFormula, Angiofram, BioRePeel и Time Code. Каждая процедура — это индивидуальный подход и внимание к деталям.</p>
+        <div class="about-stats">
+          <div>
+            <div class="stat-num">200+</div>
+            <div class="stat-label">Довольных клиентов</div>
+          </div>
+          <div>
+            <div class="stat-num">5+</div>
+            <div class="stat-label">Видов процедур</div>
+          </div>
+          <div>
+            <div class="stat-num">100%</div>
+            <div class="stat-label">Профессиональная косметика</div>
+          </div>
+        </div>
+      </div>
+      <div class="about-visual reveal reveal-delay-2">
+        <div class="about-card">
+          <div class="accent-line"></div>
+          <h4>Профессиональные пилинги</h4>
+          <p>Миндальный, BioRePeel, PRX-T33, Желтый пилинг, Джесснера — подбираем индивидуально под тип кожи</p>
+        </div>
+        <div class="about-card">
+          <div class="accent-line"></div>
+          <h4>Жидкий лазер & Микроиндипинг</h4>
+          <p>Инновационные процедуры для глубокого обновления кожи. Помогают при постакне, пигментации и расширенных порах. Чистка + пилинг уже включены в стоимость.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="services-header">
+      <div>
+        <p class="section-label">Прайс-лист</p>
+        <h2 class="section-title">Услуги &<br><em>цены</em></h2>
+      </div>
+      <button class="btn-primary" onclick="openModal()">Записаться</button>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon">✦</div>
+        <h3>Пилинги</h3>
+        <ul class="service-items">
+          <li><span>Миндальный Time Code</span><span class="service-price">1 000 ₽</span></li>
+          <li><span>BioRePeelCI</span><span class="service-price">2 000 ₽</span></li>
+          <li><span>PRX-T33 ppm</span><span class="service-price">2 500 ₽</span></li>
+          <li><span>Желтый пилинг Time Code</span><span class="service-price">2 500 ₽</span></li>
+          <li><span>Пилинг Джесснера</span><span class="service-price">2 500 ₽</span></li>
+        </ul>
+      </div>
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-icon">◈</div>
+        <h3>Чистка лица</h3>
+        <ul class="service-items">
+          <li><span>Механическая чистка PhFormula, Angiofram</span><span class="service-price">2 500 ₽</span></li>
+          <li><span>Механическая чистка + BioRePeel</span><span class="service-price">4 000 ₽</span></li>
+          <li><span>Микроиндипинг / Жидкий лазер<br><small style="color:#999;font-size:0.75rem">(чистка & пилинг включены)</small></span><span class="service-price">5 000 ₽</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section class="results" id="results">
+  <div class="container">
+    <p class="section-label reveal">Портфолио</p>
+    <h2 class="section-title reveal reveal-delay-1">Результаты<br><em>работ</em></h2>
+    <div class="results-grid">
+      <div class="result-item reveal">
+        <img src="images/before1.jpg" alt="До и после">
+        <div class="result-overlay"><span>До / После</span></div>
+      </div>
+      <div class="result-item reveal reveal-delay-1">
+        <img src="images/before2.jpg" alt="До и после">
+        <div class="result-overlay"><span>До / После</span></div>
+      </div>
+      <div class="result-item reveal reveal-delay-2">
+        <img src="images/before3.jpg" alt="До и после">
+        <div class="result-overlay"><span>До / После</span></div>
+      </div>
+      <div class="result-item reveal reveal-delay-3">
+        <img src="images/before4.jpg" alt="До и после">
+        <div class="result-overlay"><span>До / После</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews">
+  <div class="container">
+    <p class="section-label reveal">Клиенты</p>
+    <h2 class="section-title reveal reveal-delay-1">Отзывы &<br><em>впечатления</em></h2>
+    <div class="reviews-grid">
+      <div class="review-card reveal"><img src="images/review1.jpg" alt="Отзыв"></div>
+      <div class="review-card reveal reveal-delay-1"><img src="images/review2.jpg" alt="Отзыв"></div>
+      <div class="review-card reveal reveal-delay-2"><img src="images/review3.jpg" alt="Отзыв"></div>
+      <div class="review-card reveal reveal-delay-3"><img src="images/review4.jpg" alt="Отзыв"></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="container">
+    <p class="section-label reveal">FAQ</p>
+    <h2 class="section-title reveal reveal-delay-1">Частые<br><em>вопросы</em></h2>
+    <div class="faq-grid">
+      <div class="faq-item reveal">
+        <p class="faq-q">Больно ли делать пилинг / чистку лица?</p>
+        <p class="faq-a">Процедуры проходят комфортно. Возможны лёгкие ощущения покалывания или давления, но большинство клиентов переносят их спокойно.</p>
+      </div>
+      <div class="faq-item reveal reveal-delay-1">
+        <p class="faq-q">Я делаю чистку, но чёрные точки всё равно появляются. Почему?</p>
+        <p class="faq-a">Чёрные точки могут появляться снова, потому что кожа постоянно вырабатывает себум. Регулярный уход и правильно подобранные процедуры помогают значительно уменьшить их количество.</p>
+      </div>
+      <div class="faq-item reveal">
+        <p class="faq-q">Помогает ли жидкий лазер от постакне и пятен?</p>
+        <p class="faq-a">Да, процедура помогает осветлить пятна после акне, выровнять тон кожи и улучшить её общее состояние.</p>
+      </div>
+      <div class="faq-item reveal reveal-delay-1">
+        <p class="faq-q">Больно ли делать процедуру жидкого лазера?</p>
+        <p class="faq-a">Процедура проходит комфортно. Чаще всего ощущается только лёгкое тепло или покалывание.</p>
+      </div>
+      <div class="faq-item reveal">
+        <p class="faq-q">Почему домашний уход не работает без процедур?</p>
+        <p class="faq-a">Домашний уход поддерживает состояние кожи, но профессиональные процедуры работают глубже и помогают быстрее решить проблемы кожи.</p>
+      </div>
+      <div class="faq-item reveal reveal-delay-1">
+        <p class="faq-q">Как записаться на консультацию?</p>
+        <p class="faq-a">Нажмите кнопку «Записаться» на сайте, заполните форму — и мы свяжемся с вами для подтверждения удобного времени.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="container" style="position:relative;z-index:1">
+    <p class="section-label">Начните прямо сейчас</p>
+    <h2 class="section-title" style="margin-bottom:16px">Запишитесь на<br><em>консультацию</em></h2>
+    <p>Республика Дагестан, Махачкала, ул. Ярагского 34А</p>
+    <button class="btn-primary" onclick="openModal()" style="font-size:0.85rem;padding:18px 48px">Записаться на приём</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">ЭСТЕТ</div>
+        <p class="footer-desc">Косметологический кабинет Мани Султаналиевой. Профессиональный уход за кожей в Махачкале.</p>
+      </div>
+      <div>
+        <h5>Навигация</h5>
+        <ul>
+          <li><a href="#about">О специалисте</a></li>
+          <li><a href="#services">Услуги и цены</a></li>
+          <li><a href="#results">Результаты</a></li>
+          <li><a href="#faq">Вопросы</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Контакты</h5>
+        <ul>
+          <li>Махачкала, ул. Ярагского 34А</li>
+          <li style="margin-top:8px"><a href="tel:+79896732943">+7 989 673-29-43</a></li>
+          <li style="margin-top:4px">Telegram: <a href="https://t.me/+79896732943">написать</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Косметолог ЭСТЕТ · Мани Султаналиева</p>
+      <p>Махачкала, Республика Дагестан</p>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h3>Записаться</h3>
+    <p class="modal-sub">Заполните форму и мы свяжемся с вами</p>
+    <div id="formContent">
+      <div class="form-group">
+        <label>Ваше имя</label>
+        <input type="text" id="fname" placeholder="Как вас зовут?">
+      </div>
+      <div class="form-group">
+        <label>Номер телефона</label>
+        <input type="tel" id="fphone" placeholder="+7 (___) ___-__-__">
+      </div>
+      <div class="form-group">
+        <label>Услуга</label>
+        <select id="fservice">
+          <option value="" disabled selected>Выберите услугу</option>
+          <optgroup label="Пилинги">
+            <option>Миндальный Time Code — 1 000 ₽</option>
+            <option>BioRePeelCI — 2 000 ₽</option>
+            <option>PRX-T33 ppm — 2 500 ₽</option>
+            <option>Желтый пилинг Time Code — 2 500 ₽</option>
+            <option>Пилинг Джесснера — 2 500 ₽</option>
+          </optgroup>
+          <optgroup label="Чистка лица">
+            <option>Механическая чистка PhFormula/Angiofram — 2 500 ₽</option>
+            <option>Механическая чистка + BioRePeel — 4 000 ₽</option>
+            <option>Микроиндипинг / Жидкий лазер — 5 000 ₽</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Telegram или Instagram (необязательно)</label>
+        <input type="text" id="fsocial" placeholder="@username">
+      </div>
+      <button class="form-submit" onclick="submitForm()">Отправить заявку</button>
+      <p class="form-note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных.</p>
+    </div>
+    <div class="success-msg" id="successMsg">
+      <div class="check">✦</div>
+      <h4>Заявка отправлена!</h4>
+      <p>Мани свяжется с вами<br>в ближайшее время.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const TG_TOKEN = '8662775832:AAHZdW3_kBj8-PFeeHrg2IMmIDQleueIpBI';
+const TG_CHAT_ID = '6187040330';
+
+function openModal() { document.getElementById('modalOverlay').classList.add('open'); document.body.style.overflow = 'hidden'; }
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+  setTimeout(() => { document.getElementById('formContent').style.display = ''; document.getElementById('successMsg').style.display = 'none'; }, 400);
+}
+function handleOverlayClick(e) { if (e.target === document.getElementById('modalOverlay')) closeModal(); }
+
+async function submitForm() {
+  const name = document.getElementById('fname').value.trim();
+  const phone = document.getElementById('fphone').value.trim();
+  const service = document.getElementById('fservice').value;
+  const social = document.getElementById('fsocial').value.trim();
+  if (!name || !phone) { alert('Пожалуйста, заполните имя и номер телефона.'); return; }
+  const text = `✨ Новая заявка — ЭСТЕТ\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}\n💆 Услуга: ${service || 'не выбрана'}\n📱 Соцсети: ${social || '—'}`;
+  try {
+    await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ chat_id: TG_CHAT_ID, text })
+    });
+  } catch(e) {}
+  document.getElementById('formContent').style.display = 'none';
+  document.getElementById('successMsg').style.display = 'block';
+}
+
+function openMobileMenu() { document.getElementById('mobileMenu').classList.add('open'); }
+function closeMobileMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('nav');
+  nav.style.padding = window.scrollY > 60 ? '12px 48px' : '20px 48px';
+});
+</script>
+</body>
+</html>
+```
+
